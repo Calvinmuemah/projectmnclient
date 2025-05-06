@@ -43,7 +43,7 @@ export function AuthProvider({ children }) {
 
   const register = async (name, email, password) => {
     try {
-      const res = await axios.post('http://localhost:4000/api/auth/register', {
+      const res = await axios.post('https://projectmnbackend.vercel.app/api/auth/register', {
         name,
         email,
         password,
@@ -72,7 +72,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/login', {
+      const response = await axios.post('https://projectmnbackend.vercel.app/api/auth/login', {
         email,
         password,
       });
@@ -114,7 +114,7 @@ export function AuthProvider({ children }) {
 
   const updateProfile = async (updatedUserData) => {
     try {
-      const res = await axios.put('http://localhost:5000/api/auth/update-profile', updatedUserData, {
+      const res = await axios.put('https://projectmnbackend.vercel.app/auth/update-profile', updatedUserData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(AUTH_TOKEN_KEY)}`,
         },
@@ -151,209 +151,3 @@ export const useAuth = () => {
   }
   return context;
 };
-
-
-
-
-
-// import { createContext, useContext, useState, useEffect } from 'react'
-// import { useNavigate } from 'react-router-dom'
-// import { toast } from 'react-toastify'
-
-// // Create context
-// const AuthContext = createContext(null)
-
-// // Local storage keys
-// const USERS_STORAGE_KEY = 'project_hub_users'
-// const CURRENT_USER_KEY = 'project_hub_current_user'
-
-// export function AuthProvider({ children }) {
-//   const [user, setUser] = useState(null)
-//   const [isLoading, setIsLoading] = useState(true)
-//   const navigate = useNavigate()
-
-//   // Initialize users and check for logged in user
-//   useEffect(() => {
-//     const initializeUsers = () => {
-//       const storedUsers = localStorage.getItem(USERS_STORAGE_KEY)
-//       if (!storedUsers) {
-//         const defaultUsers = [
-//           {
-//             id: 1,
-//             name: 'Admin User',
-//             email: 'admin@example.com',
-//             password: 'password123', // In real apps, hash this
-//             role: 'admin',
-//             avatar: 'https://i.pravatar.cc/150?img=1'
-//           }
-//         ]
-//         localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(defaultUsers))
-//       }
-//     }
-
-//     const loadCurrentUser = () => {
-//       const currentUser = localStorage.getItem(CURRENT_USER_KEY)
-//       if (currentUser) {
-//         setUser(JSON.parse(currentUser))
-//       }
-//     }
-
-//     initializeUsers()
-//     loadCurrentUser()
-//     setIsLoading(false)
-//   }, [])
-
-//   // Register a new user
-//   const register = (name, email, password) => {
-//     try {
-//       const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]')
-
-//       if (users.some(u => u.email === email)) {
-//         toast.error('User with this email already exists')
-//         return false
-//       }
-
-//       const newUser = {
-//         id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
-//         name,
-//         email,
-//         password,
-//         role: 'user',
-//         avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70)}`
-//       }
-
-//       const updatedUsers = [...users, newUser]
-//       localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(updatedUsers))
-//       setUser(newUser)
-//       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser))
-
-//       toast.success('Registration successful')
-//       return true
-//     } catch (error) {
-//       console.error('Registration error:', error)
-//       toast.error('Registration failed. Please try again.')
-//       return false
-//     }
-//   }
-
-//   // Login user
-//   const login = (email, password) => {
-//     try {
-//       const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]')
-//       const foundUser = users.find(u => u.email === email && u.password === password)
-
-//       if (foundUser) {
-//         setUser(foundUser)
-//         localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(foundUser))
-//         toast.success('Login successful')
-//         return true
-//       } else {
-//         toast.error('Invalid email or password')
-//         return false
-//       }
-//     } catch (error) {
-//       console.error('Login error:', error)
-//       toast.error('Login failed. Please try again.')
-//       return false
-//     }
-//   }
-
-//   // Logout user
-//   const logout = () => {
-//     setUser(null)
-//     localStorage.removeItem(CURRENT_USER_KEY)
-//     toast.info('You have been logged out')
-//     navigate('/login')
-//   }
-
-//   // Request password reset
-//   const requestPasswordReset = (email) => {
-//     try {
-//       const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]')
-//       const foundUser = users.find(u => u.email === email)
-
-//       if (foundUser) {
-//         toast.success('Password reset link sent (demo only)')
-//         return true
-//       } else {
-//         toast.error('No user found with this email')
-//         return false
-//       }
-//     } catch (error) {
-//       console.error('Password reset request error:', error)
-//       toast.error('Request failed. Please try again.')
-//       return false
-//     }
-//   }
-
-//   // Reset password
-//   const resetPassword = (email, newPassword) => {
-//     try {
-//       const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]')
-//       const userIndex = users.findIndex(u => u.email === email)
-
-//       if (userIndex !== -1) {
-//         users[userIndex].password = newPassword
-//         localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users))
-//         toast.success('Password reset successfully')
-//         return true
-//       } else {
-//         toast.error('User not found')
-//         return false
-//       }
-//     } catch (error) {
-//       console.error('Password reset error:', error)
-//       toast.error('Password reset failed. Please try again.')
-//       return false
-//     }
-//   }
-
-//   // Update user profile
-//   const updateProfile = (updatedUserData) => {
-//     try {
-//       const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]')
-//       const userIndex = users.findIndex(u => u.id === user.id)
-
-//       if (userIndex !== -1) {
-//         const updatedUser = { ...users[userIndex], ...updatedUserData }
-//         users[userIndex] = updatedUser
-
-//         localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users))
-//         localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser))
-//         setUser(updatedUser)
-
-//         toast.success('Profile updated successfully')
-//         return true
-//       } else {
-//         toast.error('User not found')
-//         return false
-//       }
-//     } catch (error) {
-//       console.error('Profile update error:', error)
-//       toast.error('Failed to update profile')
-//       return false
-//     }
-//   }
-
-//   const value = {
-//     user,
-//     isLoading,
-//     login,
-//     register,
-//     logout,
-//     requestPasswordReset,
-//     resetPassword,
-//     updateProfile
-//   }
-
-//   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-// }
-
-// // Custom hook to use auth context
-// export const useAuth = () => {
-//   const context = useContext(AuthContext)
-//   if (!context) {
-//     throw new Error('useAuth must be used within an AuthProvider')
-//   }
-//   return context
-// }
