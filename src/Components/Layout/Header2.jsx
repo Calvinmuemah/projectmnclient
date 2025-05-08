@@ -29,9 +29,9 @@ const Header = () => {
             <Nav className="align-items-center">
               {user && (
                 <>
-                  <Nav.Link as={NavLink} to="/dashboard">
+                  {/* <Nav.Link as={NavLink} to="/dashboard">
                     Dashboard
-                  </Nav.Link>
+                  </Nav.Link> */}
                   <Nav.Link as={NavLink} to="/projects">
                     Projects
                   </Nav.Link>
@@ -57,8 +57,8 @@ const Header = () => {
                       src={user.avatar}
                       // alt={user.name}
                       className="rounded-circle"
-                      width="35"
-                      height="35"
+                      width="32"
+                      height="32"
                     />
                     </Link>
                     
@@ -101,9 +101,9 @@ const Header = () => {
             </Nav.Link> */}
             {user && (
               <>
-                <Nav.Link as={NavLink} to="/dashboard" onClick={() => setShow(false)}>
+                {/* <Nav.Link as={NavLink} to="/dashboard" onClick={() => setShow(false)}>
                   Dashboard
-                </Nav.Link>
+                </Nav.Link> */}
                 <Nav.Link as={NavLink} to="/projects" onClick={() => setShow(false)}>
                   Projects
                 </Nav.Link>

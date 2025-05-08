@@ -74,13 +74,17 @@ const Dashboard = () => {
                     </Button>
                   </Col>
                   <Col md={4} className="d-none d-md-block text-end">
-                    <img 
+                    <Link
+                      to="/profile"
+                    >
+                      <img 
                       src={user.avatar} 
-                      alt={user.name} 
-                      className="rounded-circle border border-3 border-white" 
-                      width="100" 
-                      height="100"
+                      // alt={user.name} 
+                      className="rounded-circle border-white" 
+                      width="80" 
+                      height="80"
                     />
+                    </Link>
                   </Col>
                 </Row>
               </Card.Body>

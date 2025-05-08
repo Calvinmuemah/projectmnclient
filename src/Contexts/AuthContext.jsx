@@ -92,7 +92,7 @@ export function AuthProvider({ children }) {
   const updateProfile = async (updatedUserData) => {
     try {
       const res = await axios.put(
-        'https://projectmnbackend.vercel.app/auth/update-profile',
+        'http://localhost:4000/api/auth/update-profile',
         updatedUserData,
         {
           headers: {
