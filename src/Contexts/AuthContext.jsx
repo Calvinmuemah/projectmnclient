@@ -92,7 +92,7 @@ export function AuthProvider({ children }) {
   const updateProfile = async (updatedUserData) => {
     try {
       const res = await axios.put(
-        'http://localhost:4000/api/auth/update-profile',
+        'https://projectmnbackend.vercel.app/api/auth/update-profile',
         updatedUserData,
         {
           headers: {
@@ -115,7 +115,7 @@ export function AuthProvider({ children }) {
 
   const requestPasswordReset = async (email) => {
     try {
-      await axios.post('http://localhost:4000/api/auth/forgotPassword', { email });
+      await axios.post('https://projectmnbackend.vercel.app/api/auth/forgotPassword', { email });
       toast.success('Reset link sent to your email');
       return true;
     } catch (error) {
@@ -127,7 +127,7 @@ export function AuthProvider({ children }) {
 
   const verifyResetToken = async (token) => {
     try {
-      const res = await axios.get(`http://localhost:4000/api/auth/verify-reset-token/${token}`);
+      const res = await axios.get(`https://projectmnbackend.vercel.app/api/auth/verify-reset-token/${token}`);
       return res.data.valid;
     } catch (error) {
       console.error('Token verification error:', error);
@@ -137,7 +137,7 @@ export function AuthProvider({ children }) {
 
   const resetPassword = async (token, Password) => {
     try {
-      await axios.post('http://localhost:4000/api/auth/reset_password', {
+      await axios.post('https://projectmnbackend.vercel.app/api/auth/reset_password', {
         token,
         password: Password,
       });
